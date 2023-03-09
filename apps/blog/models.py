@@ -1,6 +1,6 @@
 from django.db import models
 from apps.users.models import UserModel
-
+from .managers import BlogManager
 
 # Create your models here.
 
@@ -55,6 +55,9 @@ class Post(models.Model):
         null=True,
         blank=True
     )
+
+    objects = models.Manager()
+    custom_man = BlogManager()
 
     class Meta:
         verbose_name = "Пост"

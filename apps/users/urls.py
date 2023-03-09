@@ -2,13 +2,15 @@ from django.urls import path
 from .views import (
     UserCreateView, UserActivateView, UserDeactivateView,
     UserToAdminView, AdminToUserView, UserListAPIView,
-
+    AddAvatarView,
 )
 
 
 urlpatterns = [
     path('', UserCreateView.as_view()),
     path('list/', UserListAPIView.as_view()),
+
+    path('avatar/', AddAvatarView.as_view()),
 
     path('<int:pk>/activate/', UserActivateView.as_view()),
     path('<int:pk>/deactivate/', UserDeactivateView.as_view()),

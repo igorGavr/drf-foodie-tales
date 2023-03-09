@@ -15,6 +15,7 @@ from .serializers import PostListSerializer, CategoryListSerializer
 
 class PostListAPIView(ListCreateAPIView):
     queryset = Post.objects.all()
+
     serializer_class = PostListSerializer
     # permission_classes = (IsAuthenticated,)
 
@@ -26,6 +27,7 @@ class PostListAPIView(ListCreateAPIView):
     def get_queryset(self):
         query = self.request.query_params.dict()
         queryset = super().get_queryset()
+        # queryset = Post.custom_man.last_blogs(3)
         category_slug = query.get('category_slug')
 
         if category_slug:

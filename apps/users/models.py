@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from .managers import UserManager
+from django.core import validators as V
+from .enums import RegEx
+from .services import upload_avatar
 
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
@@ -18,3 +21,18 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
+
+
+class ProfileModel(models.Model):
+    class Meta:
+        db_table = 'profiles'
+
+    name = models.CharField(max_length=20, validators=[
+        V.RegexValidator(RegEx.NAME.pattern, RegEx.NAME.msg)])
+    surname = models.CharField(max_length=20, validators=[
+        V.RegexValidator(RegEx.NAME.pattern, RegEx.NAME.msg)])
+    age = models.IntegerField(validators=[
+        V.MinValueValidator(18),V.MaxValueValidator(150)])
+    phone = models.CharField(max_length=10)
+    avatar = models.ImageField(upload_to=upload_avatar, blank=True)
+    user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')

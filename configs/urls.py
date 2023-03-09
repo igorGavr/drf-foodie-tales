@@ -24,7 +24,7 @@ urlpatterns = [
 ]
 
 
-from django.conf import settings
+from configs import settings
 from django.conf.urls.static import static
 
 if settings.DEBUG:
